@@ -23,6 +23,7 @@
                     <tr>
                         <td> {{$category->id}}</td>
                         <td> {{$category->name}}</td>
+                        <td><a href="{{route('categories.edit',$category->id)}}">Edit</a></td>
                     </tr>
                 @endforeach
                 </tbody>
