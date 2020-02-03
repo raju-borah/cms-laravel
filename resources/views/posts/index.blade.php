@@ -8,33 +8,40 @@
             Posts
         </div>
         <div class="card-body">
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($posts as $post)
+         @if($posts->count()>0)
+                <table class="table table-hover">
+                    <thead>
                     <tr>
-                        <td><img src="storage/{{$post->image}}" height="50px" alt=""></td>
-                        <td> {{$post->title}}</td>
-                        <td ><a class="btn btn-secondary float-right btn-sm" href="{{route('posts.edit',$post->id)}}">Edit</a></td>
-                        <td class="pr-0">
-                            <form action="{{route('posts.destroy',$post->id)}}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" >Trash</button>
-                            </form>
-                        </td>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
-
+                    </thead>
+                    <tbody>
+                    @foreach($posts as $post)
+                        <tr>
+                            <td><img src="storage/{{$post->image}}" height="50px" alt=""></td>
+                            <td> {{$post->title}}</td>
+                            @if(!$post->trashed())
+                                <td ><a class="btn btn-secondary float-right btn-sm" href="{{route('posts.edit',$post->id)}}">Edit</a></td>
+                            @endif
+                            <td class="pr-0">
+                                <form action="{{route('posts.destroy',$post->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" >
+                                        {{$post->trashed()?'Delete':'Trash'}}
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            @else
+                <h3 class="text-center">NO POSTS YET</h3>
+            @endif
         </div>
     </div>
 @endsection
