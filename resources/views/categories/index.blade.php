@@ -17,6 +17,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Post Count</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -26,6 +27,7 @@
                         <tr>
                             <td> {{$category->id}}</td>
                             <td> {{$category->name}}</td>
+                            <td> {{$category->posts->count()}}</td>
                             <td ><a class="btn btn-secondary float-right " href="{{route('categories.edit',$category->id)}}">Edit</a></td>
                             <td class="pr-0">
                                 <button class="btn btn-danger" onclick="handleDelete({{$category->id}})">Delete</button></td>
