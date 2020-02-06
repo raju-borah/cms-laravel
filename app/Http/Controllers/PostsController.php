@@ -119,6 +119,10 @@ class PostsController extends Controller
 
             $data['image']=$image;
         }
+        if ($request->tags){
+            $post->tags()->sync($request->tags);
+        }
+
 //        update attributes
         $post->update($data);
 //        flash message
