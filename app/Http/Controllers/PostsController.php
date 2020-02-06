@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Requests\Posts\PostsCreateRequest;
 use App\Http\Requests\Posts\PostsUpdateRequest;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,7 +36,8 @@ class PostsController extends Controller
     public function create()
     {
         $categories=Category::all();
-        return view('posts.create',compact('categories'));
+        $tags=Tag::all();
+        return view('posts.create',compact('categories','tags'));
 
     }
 
@@ -51,7 +53,7 @@ class PostsController extends Controller
 //      upload the image
         $image=$request->image->store('posts');
 //        create the post
-        Post::create([
+        $post=Post::create([
             'title'=>$request->title,
             'description'=>$request->description,
             'contents'=>$request->contents,
@@ -60,6 +62,10 @@ class PostsController extends Controller
             'category_id'=>$request->category
 
         ]);
+        if ($request->tags){
+            $post->tags()->attach($request->tags);
+        }
+
 //        flash message
         session()->flash('success','Post has been created successfully');
 
@@ -89,7 +95,9 @@ class PostsController extends Controller
     public function edit(Post $post)
     {
         $categories=Category::all();
-        return view('posts.create',compact('post','categories'));
+        $tags=Tag::all();
+
+        return view('posts.create',compact('post','categories','tags'));
     }
 
     /**

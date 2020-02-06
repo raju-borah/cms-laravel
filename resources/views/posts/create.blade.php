@@ -8,17 +8,7 @@
             {{isset($post)?'Edit Post':'Create Post'}}
         </div>
         <div class="card-body">
-            @if($errors->any())
-                <div class="div alert alert-danger">
-                    <ul class="list-group">
-                        @foreach($errors->all() as $error)
-                            <li class="list-group-item">
-                                {{$error}}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+            @include('partials.errors')
             <form action="{{isset($post)?route('posts.update',$post->id):route('posts.store')}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @if(isset($post))
@@ -55,9 +45,9 @@
                     <select name="category" id="category" class="form-control">
                         @foreach($categories as $category)
                             <option value="{{$category->id}}"
-                            @if(isset($post))
-                            @if($category->id == $post->category->id)
-                            selected
+                                    @if(isset($post))
+                                    @if($category->id == $post->category->id)
+                                    selected
                                 @endif
                                 @endif
 
@@ -65,6 +55,26 @@
                         @endforeach
                     </select>
                 </div>
+                @if($tags->count()>0)
+                    <div class="form-group">
+                        <label for="tags">Tags</label>
+
+                        <select name="tags[]" id="tags" class="form-control" multiple>
+                            @foreach($tags as $tag)
+                                <option value="{{$tag->id}}"
+                                        @if(isset($post))
+                                            @if($post->hasTags($tag->id))
+                                            selected
+                                            @endif
+                                        @endif
+                                >
+                                    {{$tag->name}}
+                                </option>
+                            @endforeach
+                        </select>
+
+                    </div>
+                @endif
                 <div class="form-group">
                     <button class="btn btn-success" type="submit">{{isset($post)?'Update':'Create Post'}}</button>
                 </div>
