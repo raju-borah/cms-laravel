@@ -11,7 +11,10 @@
 |
 */
 
-Route::get('/','WelcomeController@index');
+use App\Http\Controllers\Blogs\PostsController;
+
+Route::get('/','WelcomeController@index')->name('welcome');
+Route::get('blog/posts/{post}',[PostsController::class,'show'])->name('blog.show');
 
 Auth::routes();
 
