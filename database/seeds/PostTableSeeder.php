@@ -66,7 +66,7 @@ class PostTableSeeder extends Seeder
         ]);
 
         $tag1=Tag::create([
-            'name'=>'java'
+            'name'=>'javaScript'
         ]);
         $tag2=Tag::create([
             'name'=>'programming'
@@ -78,5 +78,6 @@ class PostTableSeeder extends Seeder
         $post1->tags()->attach([$tag1->id,$tag2->id]);
         $post2->tags()->attach([$tag1->id,$tag3->id]);
         $post3->tags()->attach([$tag3->id,$tag2->id]);
+        $post4->tags()->attach([$tag1->id,$tag2->id]);
     }
 }
