@@ -16,7 +16,6 @@ public function index(){
 //    }else{
 //        $posts=Post::simplepaginate(3);
 //    }
-
     return view('welcome')
         ->with('categories',Category::all())
         ->with('tags',Tag::all())

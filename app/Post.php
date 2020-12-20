@@ -25,11 +25,14 @@ class Post extends Model
     /*
      *return void
      */
+    /**
+     * @var mixed
+     */
+
     public function deleteImage()
     {
         Storage::delete($this->image);
     }
-
     public function category(){
         return $this->belongsTo(Category::class);
     }
